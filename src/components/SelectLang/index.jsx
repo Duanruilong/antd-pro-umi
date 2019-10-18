@@ -1,36 +1,37 @@
-import { Icon, Menu } from 'antd';
-import { formatMessage, getLocale, setLocale } from 'umi-plugin-react/locale';
-import React from 'react';
-import classNames from 'classnames';
-import HeaderDropdown from '../HeaderDropdown';
-import styles from './index.less';
+import { Icon, Menu } from "antd";
+import { formatMessage, getLocale, setLocale } from "umi-plugin-react/locale";
+import React from "react";
+import classNames from "classnames";
+import HeaderDropdown from "../HeaderDropdown";
+import styles from "./index.less";
 
+/**
+ * 语言选择
+ */
 const SelectLang = props => {
   const { className } = props;
   const selectedLang = getLocale();
 
   const changeLang = ({ key }) => setLocale(key, false);
 
-  const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
+  const locales = ["zh-CN"];
   const languageLabels = {
-    'zh-CN': '简体中文',
-    'zh-TW': '繁体中文',
-    'en-US': 'English',
-    'pt-BR': 'Português',
+    "zh-CN": "简体中文"
   };
   const languageIcons = {
-    'zh-CN': '🇨🇳',
-    'zh-TW': '🇭🇰',
-    'en-US': '🇺🇸',
-    'pt-BR': '🇧🇷',
+    "zh-CN": "🇨🇳"
   };
   const langMenu = (
-    <Menu className={styles.menu} selectedKeys={[selectedLang]} onClick={changeLang}>
+    <Menu
+      className={styles.menu}
+      selectedKeys={[selectedLang]}
+      onClick={changeLang}
+    >
       {locales.map(locale => (
         <Menu.Item key={locale}>
           <span role="img" aria-label={languageLabels[locale]}>
             {languageIcons[locale]}
-          </span>{' '}
+          </span>{" "}
           {languageLabels[locale]}
         </Menu.Item>
       ))}
@@ -42,7 +43,7 @@ const SelectLang = props => {
         <Icon
           type="global"
           title={formatMessage({
-            id: 'navBar.lang',
+            id: "navBar.lang"
           })}
         />
       </span>

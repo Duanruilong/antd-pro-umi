@@ -19,7 +19,6 @@ const InjectedWrapper = (() => {
   return sfc;
 })();
 
-import "moment/locale/pt-br";
 import "moment/locale/zh-cn";
 import "moment/locale/zh-tw";
 
@@ -34,31 +33,6 @@ let defaultAntd = require("antd/lib/locale-provider/zh_CN");
 defaultAntd = defaultAntd.default || defaultAntd;
 
 const localeInfo = {
-  "en-US": {
-    messages: {
-      ...(locale => (locale.__esModule ? locale.default : locale))(
-        require("/Users/duanruilong/Github/antd-pro-umi/src/locales/en-US.js")
-      ),
-      ...(locale => (locale.__esModule ? locale.default : locale))(
-        require("/Users/duanruilong/Github/antd-pro-umi/src/pages/user/login/locales/en-US.js")
-      )
-    },
-    locale: "en-US",
-    antd: require("antd/lib/locale-provider/en_US"),
-    data: require("react-intl/locale-data/en"),
-    momentLocale: ""
-  },
-  "pt-BR": {
-    messages: {
-      ...(locale => (locale.__esModule ? locale.default : locale))(
-        require("/Users/duanruilong/Github/antd-pro-umi/src/locales/pt-BR.js")
-      )
-    },
-    locale: "pt-BR",
-    antd: require("antd/lib/locale-provider/pt_BR"),
-    data: require("react-intl/locale-data/pt"),
-    momentLocale: "pt-br"
-  },
   "zh-CN": {
     messages: {
       ...(locale => (locale.__esModule ? locale.default : locale))(
@@ -73,11 +47,19 @@ const localeInfo = {
     data: require("react-intl/locale-data/zh"),
     momentLocale: "zh-cn"
   },
-  "zh-TW": {
+  "en-US": {
     messages: {
       ...(locale => (locale.__esModule ? locale.default : locale))(
-        require("/Users/duanruilong/Github/antd-pro-umi/src/locales/zh-TW.js")
-      ),
+        require("/Users/duanruilong/Github/antd-pro-umi/src/pages/user/login/locales/en-US.js")
+      )
+    },
+    locale: "en-US",
+    antd: require("antd/lib/locale-provider/en_US"),
+    data: require("react-intl/locale-data/en"),
+    momentLocale: ""
+  },
+  "zh-TW": {
+    messages: {
       ...(locale => (locale.__esModule ? locale.default : locale))(
         require("/Users/duanruilong/Github/antd-pro-umi/src/pages/user/login/locales/zh-TW.js")
       )
