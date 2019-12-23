@@ -1,8 +1,13 @@
 import React from "react";
-import { Router as DefaultRouter, Route, Switch } from "react-router-dom";
+import {
+  Router as DefaultRouter,
+  Route,
+  Switch,
+  StaticRouter
+} from "react-router-dom";
 import dynamic from "umi/dynamic";
 import renderRoutes from "umi/lib/renderRoutes";
-import history from "@tmp/history";
+import history from "@@/history";
 import RendererWrapper0 from "/Users/duanruilong/Github/antd-pro-umi/src/pages/.umi/LocaleWrapper.jsx";
 
 const Router = require("dva/router").routerRedux.ConnectedRouter;
@@ -21,7 +26,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require("/Users/duanruilong/Github/antd-pro-umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+            require("/Users/duanruilong/Github/antd-pro-umi/node_modules/_umi-build-dev@1.16.10@umi-build-dev/lib/plugins/404/NotFound.js")
               .default,
             { pagesPath: "src/pages", hasRoutesInConfig: true }
           )
@@ -56,7 +61,7 @@ const routes = [
           {
             component: () =>
               React.createElement(
-                require("/Users/duanruilong/Github/antd-pro-umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+                require("/Users/duanruilong/Github/antd-pro-umi/node_modules/_umi-build-dev@1.16.10@umi-build-dev/lib/plugins/404/NotFound.js")
                   .default,
                 { pagesPath: "src/pages", hasRoutesInConfig: true }
               )
@@ -70,7 +75,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require("/Users/duanruilong/Github/antd-pro-umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+            require("/Users/duanruilong/Github/antd-pro-umi/node_modules/_umi-build-dev@1.16.10@umi-build-dev/lib/plugins/404/NotFound.js")
               .default,
             { pagesPath: "src/pages", hasRoutesInConfig: true }
           )
@@ -84,7 +89,7 @@ const routes = [
   {
     component: () =>
       React.createElement(
-        require("/Users/duanruilong/Github/antd-pro-umi/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+        require("/Users/duanruilong/Github/antd-pro-umi/node_modules/_umi-build-dev@1.16.10@umi-build-dev/lib/plugins/404/NotFound.js")
           .default,
         { pagesPath: "src/pages", hasRoutesInConfig: true }
       )
@@ -113,7 +118,15 @@ export default class RouterWrapper extends React.Component {
       });
     }
     this.unListen = history.listen(routeChangeHandler);
-    routeChangeHandler(history.location);
+    // dva 中 history.listen 会初始执行一次
+    // 这里排除掉 dva 的场景，可以避免 onRouteChange 在启用 dva 后的初始加载时被多执行一次
+    const isDva =
+      history.listen
+        .toString()
+        .indexOf("callback(history.location, history.action)") > -1;
+    if (!isDva) {
+      routeChangeHandler(history.location);
+    }
   }
 
   componentWillUnmount() {

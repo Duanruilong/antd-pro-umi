@@ -3,23 +3,25 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
-import Link from 'umi/link';
-import { connect } from 'dva';
-import { Icon } from 'antd';
-import { formatMessage } from 'umi-plugin-react/locale';
-import Authorized from '@/utils/Authorized';
-import RightContent from '@/components/GlobalHeader/RightContent';
-import { isAntDesignPro } from '@/utils/utils';
-import logo from '../assets/logo.svg';
-
+import ProLayout, { DefaultFooter } from "@ant-design/pro-layout";
+import React, { useEffect } from "react";
+import Link from "umi/link";
+import { connect } from "dva";
+import { Icon } from "antd";
+import Authorized from "@/utils/Authorized";
+import RightContent from "@/components/GlobalHeader/RightContent";
+import { isAntDesignPro } from "@/utils/utils";
+import logo from "../assets/logo.svg";
 /**
  * use Authorized check all menu item
  */
+
 const menuDataRender = menuList =>
   menuList.map(item => {
-    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
+    const localItem = {
+      ...item,
+      children: item.children ? menuDataRender(item.children) : []
+    };
     return Authorized.check(item.authority, localItem, null);
   });
 
@@ -28,23 +30,23 @@ const defaultFooterDom = (
     copyright="2019 蚂蚁金服体验技术部出品"
     links={[
       {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
-        blankTarget: true,
+        key: "Ant Design Pro",
+        title: "Ant Design Pro",
+        href: "https://pro.ant.design",
+        blankTarget: true
       },
       {
-        key: 'github',
+        key: "github",
         title: <Icon type="github" />,
-        href: 'https://github.com/ant-design/ant-design-pro',
-        blankTarget: true,
+        href: "https://github.com/ant-design/ant-design-pro",
+        blankTarget: true
       },
       {
-        key: 'Ant Design',
-        title: 'Ant Design',
-        href: 'https://ant.design',
-        blankTarget: true,
-      },
+        key: "Ant Design",
+        title: "Ant Design",
+        href: "https://ant.design",
+        blankTarget: true
+      }
     ]}
   />
 );
@@ -59,11 +61,15 @@ const footerRender = () => {
       {defaultFooterDom}
       <div
         style={{
-          padding: '0px 24px 24px',
-          textAlign: 'center',
+          padding: "0px 24px 24px",
+          textAlign: "center"
         }}
       >
-        <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.netlify.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg"
             width="82px"
@@ -84,10 +90,10 @@ const BasicLayout = props => {
   useEffect(() => {
     if (dispatch) {
       dispatch({
-        type: 'user/fetchCurrent',
+        type: "user/fetchCurrent"
       });
       dispatch({
-        type: 'settings/getSetting',
+        type: "settings/getSetting"
       });
     }
   }, []);
@@ -98,8 +104,8 @@ const BasicLayout = props => {
   const handleMenuCollapse = payload => {
     if (dispatch) {
       dispatch({
-        type: 'global/changeLayoutCollapsed',
-        payload,
+        type: "global/changeLayoutCollapsed",
+        payload
       });
     }
   };
@@ -117,25 +123,21 @@ const BasicLayout = props => {
       }}
       breadcrumbRender={(routers = []) => [
         {
-          path: '/',
-          breadcrumbName: formatMessage({
-            id: 'menu.home',
-            defaultMessage: 'Home',
-          }),
+          path: "/",
+          breadcrumbName: "首页"
         },
-        ...routers,
+        ...routers
       ]}
       itemRender={(route, params, routes, paths) => {
         const first = routes.indexOf(route) === 0;
         return first ? (
-          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+          <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
         ) : (
           <span>{route.breadcrumbName}</span>
         );
       }}
       footerRender={footerRender}
       menuDataRender={menuDataRender}
-      formatMessage={formatMessage}
       rightContentRender={rightProps => <RightContent {...rightProps} />}
       {...props}
       {...settings}
@@ -147,5 +149,5 @@ const BasicLayout = props => {
 
 export default connect(({ global, settings }) => ({
   collapsed: global.collapsed,
-  settings,
+  settings
 }))(BasicLayout);
